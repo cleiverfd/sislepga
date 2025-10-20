@@ -5,81 +5,117 @@
 @endsection
 @section('content')
     <section class="content">
-        <div class="container-fluid">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="txt_dni" class="mb-1">DNI</label>
-                                <input type="text" class="form-control text-sm" id="txt_dni" maxlength="8" pattern="\d{8}" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+        <div class="container-fluid mb-4">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-gradient-primary elevation-2">
+                            <i class="fas fa-folder"></i>
+                        </span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Total Expedientes</span>
+                            <div class="d-flex justify-content-between">
+                                <span class="info-box-number" id="totalExpedientes">0<small>expedientes</small></span>
+                                <a href="ruta/del/archivo.pdf" target="_blank" class="ml-2 text-primary" title="Descargar PDF">
+                                    <i class="fas fa-download"></i>
+                                </a>
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="txt_nombres" class="mb-1">Nombres</label>
-                                <input type="text" class="form-control" id="txt_nombres">
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-gradient-warning elevation-2">
+                            <i class="fas fa-clock"></i>
+                        </span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Expedientes en tramite</span>
+                            <span class="info-box-number" id="totalTramite">0<small>expedientes</small></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-gradient-success elevation-2">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Expedientes en ejecucion</span>
+                            <span class="info-box-number" id="totalEjecucion">0<small>expedientes</small></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-gradient-danger elevation-2">
+                            <i class="fas fa-users"></i>
+                        </span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Expedientes Archivados</span>
+                            <span class="info-box-number" id="totalProcesales">0<small>procesales</small></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header py-2">
+                            <h3 class="card-title mt-1">
+                                <i class="fas fa-chart-line mr-2"></i>
+                                Expedientes por Mes
+                            </h3>
+                            <div class="card-tools d-flex align-items-center">
+                                <div id="chart_expedienteMes_anios" class="btn-group mr-2"></div>
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="txt_apellido_paterno" class="mb-1">Apellido Paterno</label>
-                                <input type="text" class="form-control" id="txt_apellido_paterno">
+                        <div class="card-body">
+                            <div id="chart_expedienteMes" style="width: 100%; height: 350px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-chart-pie mr-2"></i>
+                                Expedientes por estado
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="chart_expedienteTipo" style="width: 100%; height: 351.5px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-file-alt mr-2"></i>
+                                Últimos expedientes registrados
+                            </h3>
+                        </div>
+                        <div class="card-body px-0 pt-0 mt-0 pb-4">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered table-striped" id="tbl_ultimosExpedientes">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>NÚMERO</th>
+                                            <th>FECHA INICIO</th>
+                                            <th>PRETENSIÓN</th>
+                                            <th>PROCESALES</th>
+                                            <th>ESTADO</th>
+                                            <th>FECHA CREACIÓN</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="txt_apellido_materno" class="mb-1">Apellido Materno</label>
-                                <input type="text" class="form-control" id="txt_apellido_materno">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="cbx_cargo" class="mb-1">Cargo</label>
-                                <select class="form-control" id="cbx_cargo">
-                                    <option value="" selected disabled>--SELECCIONAR--</option>
-                                    <option value="ABOGADO">ABOGADO(A)</option>
-                                    <option value="SECRETARIA">SECRETARIA</option>
-                                    <option value="PRACTICANTE">PRACTICANTE</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="txt_telefono" class="mb-1">Teléfono</label>
-                                <input type="text" class="form-control" id="txt_telefono">
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label for="txt_correo" class="mb-1">Correo</label>
-                                <input type="email" class="form-control" id="txt_correo">
-                            </div>
-                        </div>
-                        {{-- <div class="col-6">
-                                <div class="form-group">
-                                    <label for="cbx_departamento" class="mb-1">Departamento</label>
-                                    <select class="form-control" id="cbx_departamento"></select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="cbx_provincia" class="mb-1">Provincia</label>
-                                    <select class="form-control" id="cbx_provincia"></select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="cbx_distrito" class="mb-1">Distrito</label>
-                                    <select class="form-control" id="cbx_distrito"></select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="txt_direccion" class="mb-1">Dirección</label>
-                                    <input type="text" class="form-control" id="txt_direccion">
-                                </div>
-                            </div> --}}
                     </div>
                 </div>
             </div>
@@ -87,26 +123,295 @@
     </section>
 @endsection
 @push('scripts')
-    <script defer>
-        var IdEquipo;
-        var tbl_equipo;
+    <script>
+        var tbl_ultimosExpedientes;
 
         $(document).ready(function() {
-
-            fct_listarTablaEquipos();
-
-            $('#btn_guardarCambios').click(function() {
-                if ($('#btn_guardarCambios').hasClass('edit')) {
-                    fct_ActualizarIntegrante();
-                } else {
-                    fct_RegistrarIntegrante();
+            fct_totalProcesales();
+            $.getJSON('/GetExpedientesPorMes', function(response) {
+                if (response.status === 'success') {
+                    fct_totalesGeneral(response.data);
+                    fct_chartExpedientesPorMes(response.data);
+                    fct_chartExpedientesPorTipo(response.data);
                 }
             });
+            fct_listarUltimosExpedientes();
         });
 
-        function fct_listarTablaEquipos() {
-            tbl_equipo = $('#tbl_equipo').DataTable({
-                scrollY: '450px',
+        function fct_totalProcesales() {
+            $.getJSON('/GetTotalProcesales', function(response) {
+                if (response.status === 'success') {
+                    animateCount("#totalProcesales", response.data, 'procesales');
+                }
+            });
+        }
+
+        function fct_chartExpedientesPorMes(response) {
+            if (response) {
+                var data = dataChartMes(response);
+                var chartDom = document.getElementById('chart_expedienteMes');
+                var myChart = echarts.init(chartDom);
+
+                var meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+                    'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
+                ];
+
+                var anios = Object.keys(data);
+                var anioActual = new Date().getFullYear().toString();
+                if (!anios.includes(anioActual)) {
+                    anioActual = anios[0];
+                }
+
+                function getSeries(anio) {
+                    return [{
+                            name: 'Trámite',
+                            type: 'bar',
+                            data: data[anio].tramite
+                        },
+                        {
+                            name: 'Ejecución',
+                            type: 'bar',
+                            data: data[anio].ejecucion
+                        },
+                        {
+                            name: 'Archivado',
+                            type: 'bar',
+                            data: data[anio].archivado
+                        }
+                    ];
+                }
+
+                var option = {
+                    title: {
+                        text: ''
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    },
+                    legend: {
+                        top: 10
+                    },
+                    toolbox: {
+                        right: 30, // pegado a la derecha
+                        top: 10, // 🔥 arriba (no centrado)
+                        itemSize: 18,
+                        feature: {
+                            dataView: {
+                                show: true,
+                                readOnly: false
+                            },
+                            magicType: {
+                                show: true,
+                                type: ['line', 'bar']
+                            },
+                            restore: {
+                                show: true
+                            },
+                            saveAsImage: {
+                                show: true
+                            }
+                        }
+                    },
+
+                    grid: {
+                        top: 60, // espacio arriba
+                        bottom: 40, // espacio abajo 🔥
+                        left: '5%', // margen izquierdo proporcional
+                        right: '5%', // margen derecho igual que el izquierdo
+                        containLabel: true // asegura que etiquetas no se salgan
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: meses
+                    },
+                    yAxis: {
+                        type: 'value',
+                        name: 'Cantidad'
+                    },
+                    series: getSeries(anioActual)
+                };
+
+                myChart.setOption(option);
+
+                // 🔥 Renderizar botones en el header
+                var $contenedorAnios = $('#chart_expedienteMes_anios');
+                $contenedorAnios.empty();
+                anios.forEach(function(anio) {
+                    var $btn = $('<button>')
+                        .addClass('btn btn-sm ' + (anio === anioActual ? 'btn-primary' : 'btn-outline-primary'))
+                        .text(anio)
+                        .on('click', function() {
+                            anioActual = anio;
+                            myChart.setOption({
+                                series: getSeries(anioActual)
+                            });
+
+                            // actualizar estilos de botones
+                            $contenedorAnios.find('button').removeClass('btn-primary').addClass('btn-outline-primary');
+                            $(this).removeClass('btn-outline-primary').addClass('btn-primary');
+                        });
+
+                    $contenedorAnios.append($btn);
+                });
+
+                window.addEventListener('resize', function() {
+                    myChart.resize();
+                });
+            }
+        }
+
+        function fct_chartExpedientesPorTipo(data) {
+            var chartDom = document.getElementById('chart_expedienteTipo');
+            var myChart = echarts.init(chartDom);
+
+            const pieData = dataChartPie(data);
+
+            var option = {
+                title: {
+                    text: 'Expedientes por Estado',
+                    subtext: 'Totales acumulados',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{b}<br/>{c} expedientes ({d}%)'
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    formatter: function(name) {
+                        let item = pieData.find(d => d.name === name);
+                        return `${name} (${item ? item.value.toLocaleString() : 0})`;
+                    }
+                },
+                series: [{
+                    name: 'Expedientes',
+                    type: 'pie',
+                    radius: '50%',
+                    data: pieData,
+                    label: {
+                        show: true,
+                        formatter: '{b}'
+                    },
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }]
+            };
+
+            myChart.setOption(option);
+        }
+
+        function dataChartMes(data) {
+            const result = {};
+
+            data.forEach(item => {
+                const anio = item.anio;
+                const mes = item.mes - 1; // índice de 0 a 11
+                const estadoId = item.id_estado_expediente;
+
+                if (!result[anio]) {
+                    result[anio] = {
+                        tramite: Array(12).fill(0),
+                        ejecucion: Array(12).fill(0),
+                        archivado: Array(12).fill(0)
+                    };
+                }
+
+                if (estadoId === 1) {
+                    result[anio].tramite[mes] = item.total;
+                } else if (estadoId === 2) {
+                    result[anio].ejecucion[mes] = item.total;
+                } else if (estadoId === 3) {
+                    result[anio].archivado[mes] = item.total;
+                }
+            });
+
+            return result;
+        }
+
+        function dataChartPie(data) {
+            let totales = {
+                1: 0, // EN TRAMITE
+                2: 0, // EN EJECUCION
+                3: 0 // ARCHIVADO
+            };
+
+            data.forEach(item => {
+                if (totales[item.id_estado_expediente] !== undefined) {
+                    totales[item.id_estado_expediente] += item.total;
+                }
+            });
+
+            return [{
+                    value: totales[1],
+                    name: 'Trámite'
+                },
+                {
+                    value: totales[2],
+                    name: 'Ejecución'
+                },
+                {
+                    value: totales[3],
+                    name: 'Archivado'
+                }
+            ];
+        }
+
+        function animateCount(id, endValue, label = '') {
+            let element = $(id);
+            let startValue = 0;
+            let duration = 1000; // duración en ms
+            let increment = Math.ceil(endValue / (duration / 30)); // paso por frame
+            let current = startValue;
+
+            let counter = setInterval(() => {
+                current += increment;
+                if (current >= endValue) {
+                    current = endValue;
+                    clearInterval(counter);
+                }
+                element.html(`${current.toLocaleString()} ${label ? `<small>${label}</small>` : ''}`);
+            }, 30);
+        }
+
+        function fct_totalesGeneral(data) {
+            let totales = {
+                total: 0,
+                tramite: 0,
+                ejecucion: 0,
+                archivado: 0
+            };
+
+            data.forEach(item => {
+                totales.total += item.total;
+
+                if (item.id_estado_expediente === 1) {
+                    totales.tramite += item.total;
+                } else if (item.id_estado_expediente === 2) {
+                    totales.ejecucion += item.total;
+                } else if (item.id_estado_expediente === 3) {
+                    totales.archivado += item.total;
+                }
+            });
+
+            // Inyectar valores con animación
+            animateCount("#totalExpedientes", totales.total, 'expedientes');
+            animateCount("#totalTramite", totales.tramite, 'expedientes');
+            animateCount("#totalEjecucion", totales.ejecucion, 'expedientes');
+            //animateCount("#totalArchivado", totales.archivado);
+        }
+
+        function fct_listarUltimosExpedientes() {
+            tbl_ultimosExpedientes = $('#tbl_ultimosExpedientes').DataTable({
+                // scrollY: '450px',
                 scrollX: false,
                 scrollCollapse: true,
                 paging: true,
@@ -119,47 +424,9 @@
                 processing: true,
                 serverSide: false,
                 orderable: true,
-                dom: `<"row mb-2"<"col-6"B><"col-6 btn-new text-right">> <"row mb-2"<"col-6"l><"col-6"f>> <"row mb-2"<"col-12"tr>> <"row"<"col-5"i><"col-7"p>>`,
-                buttons: [{
-                        extend: 'copy',
-                        className: 'btn btn-secondary rounded-lg mr-2',
-                        text: '<i class="fas fa-copy"></i>',
-                        exportOptions: {
-                            columns: ':visible:not(:last-child)'
-                        }
-                    },
-                    {
-                        extend: 'excel',
-                        className: 'btn btn-success mr-2 rounded-lg',
-                        text: '<i class="fas fa-file-excel"></i>',
-                        filename: 'Listado_Procesales',
-                        title: 'Reporte de Procesales',
-                        exportOptions: {
-                            columns: ':visible:not(:last-child)'
-                        }
-                    },
-                    {
-                        extend: 'pdf',
-                        className: 'btn btn-danger mr-2 rounded-lg',
-                        text: '<i class="fas fa-file-pdf"></i>',
-                        filename: 'Listado_Procesales',
-                        title: 'Reporte de Procesales',
-                        orientation: 'landscape',
-                        pageSize: 'A4',
-                        exportOptions: {
-                            columns: ':visible:not(:last-child)'
-                        }
-                    },
-                    {
-                        text: '<i class="fas fa-plus"></i> Nuevo',
-                        className: 'btn btn-success rounded-lg d-none new',
-                        action: function() {
-                            fct_nuevoIntegrante();
-                        }
-                    }
-                ],
+                dom: `<"row mb-2"<"col-12"tr>>`,
                 ajax: {
-                    url: '/GetEquipo',
+                    url: '/GetUltimosExpedientes',
                     type: 'GET',
                     cache: true,
                     error: function(xhr, status, error) {
@@ -167,314 +434,51 @@
                     }
                 },
                 columns: [{
-                        data: 'Id',
+                        data: 'idExpediente',
                         className: 'py-1 text-sm text-center'
                     },
                     {
-                        data: 'Dni',
+                        data: 'numero',
                         className: 'py-1 text-sm'
                     },
                     {
-                        data: 'Nombres',
+                        data: 'fechaInicio',
                         className: 'py-1 text-sm'
                     },
                     {
-                        data: 'ApellidoPaterno',
+                        data: 'pretension',
                         className: 'py-1 text-sm'
                     },
                     {
-                        data: 'ApellidoMaterno',
-                        className: 'py-1 text-sm'
-                    },
-                    {
-                        data: 'Cargo',
-                        className: 'py-1 text-sm'
-                    },
-                    // {
-                    //     data: 'Departamento',
-                    //     className: 'py-1 text-sm'
-                    // },
-                    // {
-                    //     data: 'Provincia',
-                    //     className: 'py-1 text-sm'
-                    // },
-                    // {
-                    //     data: 'Distrito',
-                    //     className: 'py-1 text-sm'
-                    // },
-                    // {
-                    //     data: 'Direccion',
-                    //     className: 'py-1 text-sm'
-                    // },
-                    {
-                        data: 'Correo',
-                        className: 'py-1 text-sm'
-                    },
-                    {
-                        data: 'Telefono',
+                        data: 'procesales',
                         className: 'py-1 text-sm'
                     },
                     {
                         data: null,
+                        className: 'py-1 pl-3 text-sm text-nowrap',
                         orderable: false,
-                        className: 'py-1 text-sm text-center',
                         render: function(data, type, row) {
+                            var idEstado = data.idEstadoExpediente;
 
-                            let btnEditar = `<button class="btn btn-sm btn-warning ml-1 btn-editar" onclick="fct_editarIntegrante(${data.Id})"><i class="fas fa-edit"></i></button>`;
-                            let btnEliminar = `<button class="btn btn-sm btn-danger ml-1" onclick="fct_eliminarIntegrante(${data.Id})"><i class="fas fa-trash"></i></button>`;
-                            return btnEditar + btnEliminar;
+                            var badge = '';
+
+                            if (idEstado === 1) {
+                                badge = `<span class="badge badge-warning py-1 px-2">${data.estadoExpediente}</span>`;
+                            } else if (idEstado === 2) {
+                                badge = `<span class="badge badge-success py-1 px-2">${data.estadoExpediente}</span>`;
+                            } else if (idEstado === 3) {
+                                badge = `<span class="badge badge-danger py-1 px-2">${data.estadoExpediente}</span>`;
+                            }
+
+                            return badge;
                         }
+                    },
+                    {
+                        data: 'fechaRegistro',
+                        className: 'py-1 text-sm'
                     }
                 ],
-                initComplete: function() {
-                    $('.new').removeClass('d-none');
-                    let $nuevo = $('.new').detach();
-                    $('.btn-new').append($nuevo);
-                }
-            });
-        }
-
-        function fct_nuevoIntegrante() {
-            fct_limpiarCamposEquipo();
-            $('#mdlEquipo').modal('show');
-            $('#modalEquipoLabel').text('Nuevo Integrante');
-            $('#btn_guardarCambios').text('Registrar');
-            $('#btn_guardarCambios').removeClass('edit');
-        }
-
-        function fct_RegistrarIntegrante() {
-
-            let formData = new FormData();
-
-            formData.append('dni', $('#txt_dni').val());
-            formData.append('nombres', $('#txt_nombres').val().toUpperCase());
-            formData.append('apellido_paterno', $('#txt_apellido_paterno').val().toUpperCase());
-            formData.append('apellido_materno', $('#txt_apellido_materno').val().toUpperCase());
-            formData.append('cargo', $('#cbx_cargo').val().toUpperCase());
-            formData.append('telefono', $('#txt_telefono').val());
-            formData.append('correo', $('#txt_correo').val());
-
-            $.ajax({
-                url: '/equipo/registrar',
-                type: 'POST',
-                data: formData,
-                dataType: 'json',
-                processData: false,
-                contentType: false,
-                success: function(data) {
-                    if (data.status === 'success') {
-                        tbl_equipo.ajax.reload();
-                        $('#mdlEquipo').modal('hide');
-                        fct_limpiarCamposEquipo();
-                        toast.success("SISGE", data.Msj);
-                    } else if (data.status === 'error') {
-                        toast.error("SISGE", data.message);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error en la petición:', error);
-                }
-            });
-        }
-
-        function fct_limpiarCamposEquipo() {
-            $('#txt_dni').val('');
-            $('#txt_nombres').val('');
-            $('#txt_apellido_paterno').val('');
-            $('#txt_apellido_materno').val('');
-            $('#cbx_cargo').val('');
-            $('#txt_telefono').val('');
-            $('#txt_correo').val('');
-        }
-
-        function fct_listarDepartamentos() {
-            $.getJSON('/GetDepartamentos', function(data) {
-                if (data.status === 'success') {
-                    var $select = $('#cbx_departamentos');
-                    $select.empty().append('<option value="">--SELECCIONAR--</option>');
-
-                    $.each(data.data, function(index, item) {
-                        $select.append(
-                            `<option value="${item.Id}">${item.Descripcion}</option>`
-                        );
-                    });
-                }
-            });
-        }
-
-        function fct_listarProvincias(idDepartamento) {
-            $.getJSON('/GetProvincias', {
-                idDepartamento: idDepartamento
-            }, function(data) {
-                if (data.status === 'success') {
-                    var $select = $('#cbx_provincias');
-                    $select.empty().append('<option value="">--SELECCIONAR--</option>');
-                    $.each(data.data, function(index, item) {
-                        $select.append(
-                            `<option value="${item.Id}">${item.Descripcion}</option>`
-                        );
-                    });
-                }
-            });
-        }
-
-        function fct_listarDistritos(idProvincia) {
-            $.getJSON('/GetDistritos', {
-                idProvincia: idProvincia
-            }, function(data) {
-                if (data.status === 'success') {
-                    var $select = $('#cbx_distritos');
-                    $select.empty().append('<option value="">--SELECCIONAR--</option>');
-                    $.each(data.data, function(index, item) {
-                        $select.append(
-                            `<option value="${item.Id}">${item.Descripcion}</option>`
-                        );
-                    });
-                }
-            });
-        }
-
-        async function GetUbigeo(persona) {
-
-            $('#cbx_departamentos').val(persona.IdDepartamento);
-
-            $.getJSON('/GetProvincias', {
-                idDepartamento: persona.IdDepartamento
-            }, function(data) {
-                if (data.status === 'success') {
-
-                    let $provinciaSelect = $('#cbx_provincias');
-                    data.data.forEach(function(item) {
-                        $provinciaSelect.append(
-                            `<option value="${item.Id}">${item.Descripcion}</option>`);
-                    });
-
-                    $('#cbx_provincias').val(persona.IdProvincia);
-
-                    $.getJSON('/GetDistritos', {
-                        idProvincia: persona.IdProvincia
-                    }, function(data) {
-                        if (data.status === 'success') {
-
-                            let $distritoSelect = $('#cbx_distritos');
-                            data.data.forEach(function(item) {
-                                $distritoSelect.append(
-                                    `<option value="${item.Id}">${item.Descripcion}</option>`
-                                );
-                            });
-
-                            $('#cbx_distritos').val(persona.IdDistrito);
-                            $('#txt_direccion').val(persona.Direccion);
-                        }
-                    });
-                }
-                hideLoaderProcesal();
-            });
-        }
-
-        function fct_editarIntegrante(id) {
-            fct_limpiarCamposEquipo();
-
-            $.getJSON('/equipo/editar/' + id, function(json) {
-                if (json.status === 'success') {
-
-                    $('#mdlEquipo').modal('show');
-                    $('#modalEquipoLabel').text('Editar Integrante');
-                    $('#btn_guardarCambios').text('Guardar Cambios');
-                    $('#btn_guardarCambios').addClass('edit');
-
-                    const integrante = json.data;
-                    IdEquipo = integrante.Id;
-                    $('#txt_dni').val(integrante.Dni);
-                    $('#txt_apellido_paterno').val(integrante.ApellidoPaterno);
-                    $('#txt_apellido_materno').val(integrante.ApellidoMaterno);
-                    $('#txt_nombres').val(integrante.Nombres);
-                    $('#cbx_cargo').val(integrante.Cargo);
-                    $('#txt_telefono').val(integrante.Telefono);
-                    $('#txt_correo').val(integrante.Correo);
-                }
-            });
-        }
-
-        function fct_ActualizarIntegrante() {
-
-            let formData = new FormData();
-
-            formData.append('id', IdEquipo);
-            formData.append('dni', $('#txt_dni').val());
-            formData.append('nombres', $('#txt_nombres').val().toUpperCase());
-            formData.append('apellido_paterno', $('#txt_apellido_paterno').val().toUpperCase());
-            formData.append('apellido_materno', $('#txt_apellido_materno').val().toUpperCase());
-            formData.append('cargo', $('#cbx_cargo').val().toUpperCase());
-            formData.append('telefono', $('#txt_telefono').val());
-            formData.append('correo', $('#txt_correo').val());
-
-            $.ajax({
-                url: 'equipo/actualizar',
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    if (response.status === 'success') {
-                        tbl_equipo.ajax.reload();
-                        $('#mdlEquipo').modal('hide');
-                        fct_limpiarCamposEquipo();
-                        toast.success("SISGE", response.Msj);
-                    } else if (response.status === 'error') {
-                        toast.error("SISGE", response.Msj2);
-                    }
-                },
-                error: function(xhr) {
-                    console.error('Error:', xhr.responseText);
-                }
-            });
-        }
-
-        function fct_eliminarIntegrante(id) {
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "¡No podrás revertir esto!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, eliminarlo',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: '/equipo/eliminar',
-                        type: 'POST',
-                        data: {
-                            id: id
-                        },
-                        dataType: 'json',
-                        success: function(data) {
-                            if (data.status === 'success') {
-                                tbl_equipo.ajax.reload();
-                                toast.success("SISGE", data.Msj);
-                            } else if (data.status === 'error') {
-                                toast.error("SISGE", data.Msj2);
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Error en la petición:', error);
-                        }
-                    });
-                }
             });
         }
     </script>
-@endpush
-@push('styles')
-    <style>
-        .text-sm {
-            font-size: 0.875rem;
-        }
-
-        .btn-editar {
-            padding-right: 5px;
-        }
-    </style>
 @endpush

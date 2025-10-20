@@ -7,6 +7,7 @@ use App\Models\UserSession;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -17,15 +18,41 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
+        // Validación inicial
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
+        ], [
+            'email.required' => 'Por favor ingrese su correo electrónico.',
+            'email.email'    => 'El correo electrónico no es válido.',
+            'password.required' => 'Debe ingresar una contraseña.',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
 
         $user = User::where('email', $request->email)->first();
 
+        if (! $user) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => [
+                    'email' => ['El correo electrónico no está registrado.']
+                ]
+            ], 422);
+        }
+
         if (! $user || ! Hash::check($request->password, $user->password)) {
-            return back()->withErrors(['password' => 'La contraseña es incorrecta.']);
+            return response()->json([
+                'status' => 'error',
+                'errors' => [
+                    'password' => ['La contraseña es incorrecta.']
+                ]
+            ], 422);
         }
 
         Auth::login($user);
@@ -40,10 +67,13 @@ class AuthController extends Controller
 
         session(['custom_session_id' => $session->id]);
 
-        return redirect()->intended('/inicio');
+        return response()->json([
+            'status' => 'success',
+            'redirect' => url('/inicio')
+        ]);
     }
 
-     public function logout(Request $request)
+    public function logout(Request $request)
     {
         if (session()->has('custom_session_id')) {
             $session = UserSession::find(session('custom_session_id'));

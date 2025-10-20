@@ -615,13 +615,13 @@
                 contentType: false,
                 success: function(response) {
                     if (response.status === 'success' && response.Msj != '') {
-                        toast.success("SISGE", response.Msj);
+                        toast.success("SISLEPGA", response.Msj);
 
                         $('#mdlEditarProcesal').modal('hide');
 
                         tbl_procesales.ajax.reload();
                     } else if (response.status === 'success' && response.Msj2 != '') {
-                        toast.error("SISGE", response.Msj2);
+                        toast.error("SISLEPGA", response.Msj2);
                     }
                 },
                 error: function(xhr) {
@@ -678,7 +678,7 @@
                 success: function(data) {
                     if (data.status === 'success') {
                         $('#mdlComunicacionProcesal').modal('hide');
-                        toast.success("SISGE", data.Msj);
+                        toast.success("SISLEPGA", data.Msj);
                     }
                 },
                 error: function(xhr, status, error) {

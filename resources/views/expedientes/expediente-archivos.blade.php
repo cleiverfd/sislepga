@@ -485,12 +485,12 @@
             var archivo = fileInput.files[0];
 
             if (descripcion === '') {
-                toast.warning("SISGE", 'Por favor ingrese una descripcion');
+                toast.warning("SISLEPGA", 'Por favor ingrese una descripcion');
                 return;
             }
 
             if (!archivo) {
-                toast.warning("SISGE", 'Por favor seleccione un archivo');
+                toast.warning("SISLEPGA", 'Por favor seleccione un archivo');
                 return;
             }
 
@@ -508,17 +508,17 @@
                 contentType: false,
                 success: function(response) {
                     if (response.status === 'success' && response.Msj != '') {
-                        toast.success("SISGE", response.Msj);
+                        toast.success("SISLEPGA", response.Msj);
                         $('#mdl-eje').modal('hide');
                         fct_limpiarCamposEje();
                         tbl_archivosEje.ajax.reload();
                     } else if (response.status === 'success' && response.Msj2 != '') {
-                        toast.error("SISGE", response.Msj2);
+                        toast.error("SISLEPGA", response.Msj2);
                     }
                 },
                 error: function(xhr) {
                     console.error('Error:', xhr.responseText);
-                    toast.error("SISGE", xhr.responseText);
+                    toast.error("SISLEPGA", xhr.responseText);
                 }
             });
         }
@@ -549,12 +549,12 @@
             var archivo = fileInput.files[0];
 
             if (descripcion === '') {
-                toast.warning("SISGE", 'Por favor ingrese una descripcion');
+                toast.warning("SISLEPGA", 'Por favor ingrese una descripcion');
                 return;
             }
 
             if (!archivo) {
-                toast.warning("SISGE", 'Por favor seleccione un archivo');
+                toast.warning("SISLEPGA", 'Por favor seleccione un archivo');
                 return;
             }
 
@@ -572,17 +572,17 @@
                 contentType: false,
                 success: function(response) {
                     if (response.status === 'success' && response.Msj != '') {
-                        toast.success("SISGE", response.Msj);
+                        toast.success("SISLEPGA", response.Msj);
                         $('#mdl-eje').modal('hide');
                         fct_limpiarCamposEje();
                         tbl_archivosEje.ajax.reload();
                     } else if (response.status === 'success' && response.Msj2 != '') {
-                        toast.error("SISGE", response.Msj2);
+                        toast.error("SISLEPGA", response.Msj2);
                     }
                 },
                 error: function(xhr) {
                     console.error('Error:', xhr.responseText);
-                    toast.error("SISGE", xhr.responseText);
+                    toast.error("SISLEPGA", xhr.responseText);
                 }
             });
         }
@@ -609,12 +609,12 @@
                         success: function(json) {
                             if (json.status === 'success') {
                                 $('#tbl_archivosEje').DataTable().ajax.reload();
-                                toast.success("SISGE", json.Msj);
+                                toast.success("SISLEPGA", json.Msj);
                             }
                         },
                         error: function(xhr) {
                             console.error('Error:', xhr.responseText);
-                            toast.error("SISGE", xhr.responseText);
+                            toast.error("SISLEPGA", xhr.responseText);
                         }
                     });
                 }
@@ -635,12 +635,12 @@
             var archivo = fileInput.files[0];
 
             if (descripcion === '') {
-                toast.warning("SISGE", 'Por favor ingrese una descripcion');
+                toast.warning("SISLEPGA", 'Por favor ingrese una descripcion');
                 return;
             }
 
             if (!archivo) {
-                toast.warning("SISGE", 'Por favor seleccione un archivo');
+                toast.warning("SISLEPGA", 'Por favor seleccione un archivo');
                 return;
             }
 
@@ -658,17 +658,17 @@
                 contentType: false,
                 success: function(response) {
                     if (response.status === 'success' && response.Msj != '') {
-                        toast.success("SISGE", response.Msj);
+                        toast.success("SISLEPGA", response.Msj);
                         $('#mdl-escrito').modal('hide');
                         fct_limpiarCamposEscrito();
                         tbl_archivosEscritos.ajax.reload();
                     } else if (response.status === 'success' && response.Msj2 != '') {
-                        toast.error("SISGE", response.Msj2);
+                        toast.error("SISLEPGA", response.Msj2);
                     }
                 },
                 error: function(xhr) {
                     console.error('Error:', xhr.responseText);
-                    toast.error("SISGE", xhr.responseText);
+                    toast.error("SISLEPGA", xhr.responseText);
                 }
             });
         }
@@ -699,12 +699,12 @@
             var archivo = fileInput.files[0];
 
             if (descripcion === '') {
-                toast.warning("SISGE", 'Por favor ingrese una descripcion');
+                toast.warning("SISLEPGA", 'Por favor ingrese una descripcion');
                 return;
             }
 
             if (!archivo) {
-                // toast.warning("SISGE", 'Por favor seleccione un archivo');
+                // toast.warning("SISLEPGA", 'Por favor seleccione un archivo');
                 // return;
                 archivo = null;
             }
@@ -723,17 +723,17 @@
                 contentType: false,
                 success: function(response) {
                     if (response.status === 'success' && response.Msj != '') {
-                        toast.success("SISGE", response.Msj);
+                        toast.success("SISLEPGA", response.Msj);
                         $('#mdl-escrito').modal('hide');
                         fct_limpiarCamposEscrito();
                         tbl_archivosEscritos.ajax.reload();
                     } else if (response.status === 'success' && response.Msj2 != '') {
-                        toast.error("SISGE", response.Msj2);
+                        toast.error("SISLEPGA", response.Msj2);
                     }
                 },
                 error: function(xhr) {
                     console.error('Error:', xhr.responseText);
-                    toast.error("SISGE", xhr.responseText);
+                    toast.error("SISLEPGA", xhr.responseText);
                 }
             });
         }
@@ -760,12 +760,12 @@
                         success: function(json) {
                             if (json.status === 'success') {
                                 $('#tbl_archivosEscritos').DataTable().ajax.reload();
-                                toast.success("SISGE", json.Msj);
+                                toast.success("SISLEPGA", json.Msj);
                             }
                         },
                         error: function(xhr) {
                             console.error('Error:', xhr.responseText);
-                            toast.error("SISGE", xhr.responseText);
+                            toast.error("SISLEPGA", xhr.responseText);
                         }
                     });
                 }

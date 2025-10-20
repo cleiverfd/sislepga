@@ -406,9 +406,9 @@
                 contentType: false,
                 success: function(response) {
                     if (response.status === 'success' && response.Msj != '') {
-                        toast.success("SISGE", response.Msj);
+                        toast.success("SISLEPGA", response.Msj);
                     } else if (response.status === 'success' && response.Msj2 != '') {
-                        toast.error("SISGE", response.Msj2);
+                        toast.error("SISLEPGA", response.Msj2);
                     }
                 },
                 error: function(xhr) {

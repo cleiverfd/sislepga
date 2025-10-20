@@ -443,7 +443,7 @@
                          $('#cbx_distritos').val(null).trigger('change');
                          $('#txt_calle').val('');
                          hideLoaderProcesal();
-                         toast.warning("SISGE", "PERSONA NO ENCONTRADA, INGRESE MANUALMENTE");
+                         toast.warning("SISLEPGA", "PERSONA NO ENCONTRADA, INGRESE MANUALMENTE");
                      }
                  }
              });
@@ -490,14 +490,14 @@
          function fct_RegistrarProcesal() {
              console.log('IdExpediente: ', IdExpediente);
              if (IdExpediente === null || IdExpediente === 0) {
-                 toast.error("SISGE", "TIENE QUE REGISTRAR PRIMERO EL EXPEDIENTE");
+                 toast.error("SISLEPGA", "TIENE QUE REGISTRAR PRIMERO EL EXPEDIENTE");
                  return;
              }
 
              const tipoPersona = $('#cbx_TipoPersona').val();
 
              if (!tipoPersona) {
-                 toast.warning("SISGE", 'SELECCIONE EL TIPO DE PERSONA');
+                 toast.warning("SISLEPGA", 'SELECCIONE EL TIPO DE PERSONA');
                  return;
              }
 
@@ -538,12 +538,12 @@
                  contentType: false,
                  success: function(response) {
                      if (response.status === 'success' && response.Msj != '') {
-                         toast.success("SISGE", response.Msj);
+                         toast.success("SISLEPGA", response.Msj);
                          $('#mdl-procesal-nuevo').modal('hide');
                          limpiarCamposProcesal();
                          tbl_procesales.ajax.reload();
                      } else if (response.status === 'success' && response.Msj2 != '') {
-                         toast.error("SISGE", response.Msj2);
+                         toast.error("SISLEPGA", response.Msj2);
                      }
                  },
                  error: function(xhr) {
@@ -612,7 +612,7 @@
              const tipoPersona = $('#cbx_TipoPersona').val();
 
              if (!tipoPersona) {
-                 toast.warning("SISGE", 'SELECCIONE EL TIPO DE PERSONA');
+                 toast.warning("SISLEPGA", 'SELECCIONE EL TIPO DE PERSONA');
                  return;
              }
 
@@ -654,13 +654,13 @@
                  contentType: false,
                  success: function(response) {
                      if (response.status === 'success' && response.Msj != '') {
-                         toast.success("SISGE", response.Msj);
+                         toast.success("SISLEPGA", response.Msj);
                          $('#btn_GuardarProcesal').removeClass('edit');
                          $('#mdl-procesal-nuevo').modal('hide');
                          limpiarCamposProcesal();
                          tbl_procesales.ajax.reload();
                      } else if (response.status === 'success' && response.Msj2 != '') {
-                         toast.error("SISGE", response.Msj2);
+                         toast.error("SISLEPGA", response.Msj2);
                      }
                  },
                  error: function(xhr) {
@@ -690,7 +690,7 @@
                          },
                          success: function(response) {
                              if (response.status === 'success') {
-                                 toast.success("SISGE", response.Msj);
+                                 toast.success("SISLEPGA", response.Msj);
                                  limpiarCamposProcesal();
                              }
                          },

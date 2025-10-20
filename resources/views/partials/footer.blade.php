@@ -1,5 +1,5 @@
  <footer class="main-footer">
-     <strong>Copyright &copy; 2024-2025 <a href="https://sisge.net">SISGE</a>.</strong>
+     <strong>Copyright &copy; 2024-2025 <a href="https://SISLEPGA.net">SISLEPGA</a>.</strong>
      Todos los derechos reservados.
      <div class="float-right d-none d-sm-inline-block">
          <b>Version</b> 2.0.0

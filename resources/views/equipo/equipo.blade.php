@@ -303,9 +303,9 @@
                         tbl_equipo.ajax.reload();
                         $('#mdlEquipo').modal('hide');
                         fct_limpiarCamposEquipo();
-                        toast.success("SISGE", data.Msj);
+                        toast.success("SISLEPGA", data.Msj);
                     } else if (data.status === 'error') {
-                        toast.error("SISGE", data.message);
+                        toast.error("SISLEPGA", data.message);
                     }
                 },
                 error: function(xhr, status, error) {
@@ -457,9 +457,9 @@
                         tbl_equipo.ajax.reload();
                         $('#mdlEquipo').modal('hide');
                         fct_limpiarCamposEquipo();
-                        toast.success("SISGE", response.Msj);
+                        toast.success("SISLEPGA", response.Msj);
                     } else if (response.status === 'error') {
-                        toast.error("SISGE", response.Msj2);
+                        toast.error("SISLEPGA", response.Msj2);
                     }
                 },
                 error: function(xhr) {
@@ -488,9 +488,9 @@
                         success: function(data) {
                             if (data.status === 'success') {
                                 tbl_equipo.ajax.reload();
-                                toast.success("SISGE", data.Msj);
+                                toast.success("SISLEPGA", data.Msj);
                             } else if (data.status === 'error') {
-                                toast.error("SISGE", data.Msj2);
+                                toast.error("SISLEPGA", data.Msj2);
                             }
                         },
                         error: function(xhr, status, error) {

@@ -280,7 +280,7 @@
                     $('#txt_nombre').val('');
                     $('#txt_email').val('');
                     $('#cbx_rolUsuario').val('');
-                    toast.success("SISGE", response.Msj);
+                    toast.success("SISLEPGA", response.Msj);
                 },
                 error: function(xhr) {
                     console.error('Error al registrar usuario:', xhr.responseText);
@@ -327,7 +327,7 @@
                     $('#txt_nombre').val('');
                     $('#txt_email').val('');
                     $('#cbx_rolUsuario').val('');
-                    toast.success("SISGE", response.Msj);
+                    toast.success("SISLEPGA", response.Msj);
                 },
                 error: function(xhr) {
                     console.error('Error al registrar usuario:', xhr.responseText);
@@ -360,12 +360,12 @@
                         success: function(response) {
                             if (response.status === 'success') {
                                 $('#tbl_usuarios').DataTable().ajax.reload();
-                                toast.success("SISGE", response.Msj);
+                                toast.success("SISLEPGA", response.Msj);
                             }
                         },
                         error: function(xhr) {
                             console.error('Error al eliminar usuario:', xhr.responseText);
-                            toast.danger("SISGE", xhr.responseText);
+                            toast.danger("SISLEPGA", xhr.responseText);
                         }
                     });
                 }
@@ -442,7 +442,7 @@
                 contentType: false,
                 success: function(response) {
                     $('#mdl-recursos-sistema').modal('hide');
-                    toast.success("SISGE", response.Msj);
+                    toast.success("SISLEPGA", response.Msj);
                 },
                 error: function(xhr) {
                     console.error('Error al guardar permisos:', xhr.responseText);

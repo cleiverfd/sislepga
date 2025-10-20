@@ -395,12 +395,12 @@
                 contentType: false,
                 success: function(response) {
                     if (response.status === 'success' && response.Msj != '') {
-                        toast.success("SISGE", response.Msj);
+                        toast.success("SISLEPGA", response.Msj);
                         $('#mdl-audiencia').modal('hide');
                         fct_limpiarCamposAudiencia();
                         tbl_audicencias.ajax.reload();
                     } else if (response.status === 'success' && response.Msj2 != '') {
-                        toast.error("SISGE", response.Msj2);
+                        toast.error("SISLEPGA", response.Msj2);
                     }
                 },
                 error: function(xhr) {
@@ -453,12 +453,12 @@
                 contentType: false,
                 success: function(response) {
                     if (response.status === 'success' && response.Msj != '') {
-                        toast.success("SISGE", response.Msj);
+                        toast.success("SISLEPGA", response.Msj);
                         $('#mdl-audiencia').modal('hide');
                         fct_limpiarCamposAudiencia();
                         tbl_audicencias.ajax.reload();
                     } else if (response.status === 'success' && response.Msj2 != '') {
-                        toast.error("SISGE", response.Msj2);
+                        toast.error("SISLEPGA", response.Msj2);
                     }
                 },
                 error: function(xhr) {
@@ -489,11 +489,11 @@
                         success: function(json) {
                             if (json.status === 'success') {
                                 tbl_audicencias.ajax.reload();
-                                toast.success("SISGE", json.Msj);
+                                toast.success("SISLEPGA", json.Msj);
                             }
                         },
                         error: function(xhr) {
-                            toast.error("SISGE", xhr.responseText);
+                            toast.error("SISLEPGA", xhr.responseText);
                             console.error('Error:', xhr.responseText);
                         }
                     });
@@ -529,17 +529,17 @@
                 contentType: false,
                 success: function(response) {
                     if (response.status === 'success' && response.Msj != '') {
-                        toast.success("SISGE", response.Msj);
+                        toast.success("SISLEPGA", response.Msj);
                         $('#mdl-alerta').modal('hide');
                         fct_limpiarCamposAlerta();
                         tbl_alertas.ajax.reload();
                     } else if (response.status === 'success' && response.Msj2 != '') {
-                        toast.error("SISGE", response.Msj2);
+                        toast.error("SISLEPGA", response.Msj2);
                     }
                 },
                 error: function(xhr) {
                     console.error('Error:', xhr.responseText);
-                    toast.error("SISGE", xhr.responseText);
+                    toast.error("SISLEPGA", xhr.responseText);
                 }
             });
         }
@@ -584,12 +584,12 @@
                 contentType: false,
                 success: function(response) {
                     if (response.status === 'success' && response.Msj != '') {
-                        toast.success("SISGE", response.Msj);
+                        toast.success("SISLEPGA", response.Msj);
                         $('#mdl-alerta').modal('hide');
                         fct_limpiarCamposAlerta();
                         tbl_alertas.ajax.reload();
                     } else if (response.status === 'success' && response.Msj2 != '') {
-                        toast.error("SISGE", response.Msj2);
+                        toast.error("SISLEPGA", response.Msj2);
                     }
                 },
                 error: function(xhr) {
@@ -620,11 +620,11 @@
                         success: function(json) {
                             if (json.status === 'success') {
                                 tbl_alertas.ajax.reload();
-                                toast.success("SISGE", json.Msj);
+                                toast.success("SISLEPGA", json.Msj);
                             }
                         },
                         error: function(xhr) {
-                            toast.error("SISGE", xhr.responseText);
+                            toast.error("SISLEPGA", xhr.responseText);
                             console.error('Error:', xhr.responseText);
                         }
                     });
