@@ -12,10 +12,8 @@ use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 #login
-//Route::get('/', [AuthController::class, 'guest'])->name('guest');
-
 // Login y registro
-Route::get('/', [AuthController::class, 'guest'])->name('guest');
+Route::get('/', [AuthController::class, 'showLogin'])->name('guest');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/register', [AuthController::class, 'showRegister']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -24,9 +22,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 #vistas
 Route::middleware(['auth:sanctum', config('jetstream.auth_session')])->group(function () {
     Route::get('/inicio', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/GetExpedientesPorMes', [DashboardController::class, 'GetExpedientesPorMes']);
-    Route::get('/GetUltimosExpedientes', [DashboardController::class, 'GetUltimosExpedientes']);
-    Route::get('/GetTotalProcesales', [DashboardController::class, 'GetTotalProcesales']);
+    Route::get('/GetExpedientesPorMes', [DashboardController::class, 'getExpedientesPorMes']);
+    Route::get('/GetUltimosExpedientes', [DashboardController::class, 'getUltimosExpedientes']);
+    Route::get('/GetTotalProcesales', [DashboardController::class, 'getTotalProcesales']);
    
     Route::get('/usuarios', [UsuarioController::class, 'listar_Usuarios']);
     Route::get('/GetUsuarios', [UsuarioController::class, 'GetUsuarios']);

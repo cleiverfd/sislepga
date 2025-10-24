@@ -2,75 +2,137 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 use Throwable;
 
+/**
+ * Controlador del Dashboard
+ * 
+ * Maneja la visualización del panel principal y proporciona
+ * datos estadísticos sobre expedientes y procesales
+ */
 class DashboardController extends Controller
 {
-    public function index()
+    /**
+     * Muestra la vista principal del dashboard
+     */
+    public function index(): View
     {
         return view('dashboard.index');
     }
 
-    public function GetExpedientesPorMes()
+    /**
+     * Obtiene estadísticas de expedientes agrupados por mes y estado
+     * 
+     * @return JsonResponse
+     */
+    public function getExpedientesPorMes(): JsonResponse
     {
         try {
+            $expedientes = DB::select("CALL sp_listar_expedientesPorMes()");
 
-            $response = DB::select("CALL sp_listar_expedientesPorMes()");
-
-            $result = collect($response)->map(function ($item) {
+            $resultado = collect($expedientes)->map(function ($item) {
                 return [
-                    'anio'                          => $item->anio,
-                    'mes'                           => $item->mes,
-                    'id_estado_expediente'          => $item->id_estado_expediente,
-                    'estado_expediente'             => $item->estado_expediente,
-                    'total'                         => $item->total
+                    'anio' => $item->anio,
+                    'mes' => $item->mes,
+                    'id_estado_expediente' => $item->id_estado_expediente,
+                    'estado_expediente' => $item->estado_expediente,
+                    'total' => (int) $item->total
                 ];
             });
 
-            return response()->json(['status' => 'success', 'data' => $result], Response::HTTP_OK);
-        } catch (Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => $th->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json([
+                'status' => 'success',
+                'data' => $resultado
+            ]);
+        } catch (Throwable $e) {
+            Log::error('Error al obtener expedientes por mes', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Error al obtener los datos de expedientes.'
+            ], 500);
         }
     }
 
-    public function GetUltimosExpedientes()
+    /**
+     * Obtiene los últimos expedientes registrados
+     * 
+     * @return JsonResponse
+     */
+    public function getUltimosExpedientes(Request $request): JsonResponse
     {
         try {
+            // Obtener el límite desde query params o usar 20 por defecto
+            $limite = $request->input('limite', 20);
+            
+            $expedientes = DB::select("CALL sp_listar_ultimos_expedientes(?)", [$limite]);
 
-            $response = DB::table('vw_ultimos_expedientes')->get();
-
-            $result = $response->map(function ($item) {
+            $resultado = collect($expedientes)->map(function ($item) {
                 return [
-                    'idExpediente'      => $item->id_expediente,
-                    'numero'            => $item->numero,
-                    'fechaInicio'       => formatearFechaCorta($item->fecha_inicio),
-                    'idPretension'      => $item->id_pretension,
-                    'pretension'        => $item->pretension,
+                    'idExpediente' => $item->id_expediente,
+                    'numero' => $item->numero,
+                    'fechaInicio' => formatearFechaCorta($item->fecha_inicio),
+                    'idPretension' => $item->id_pretension,
+                    'pretension' => $item->pretension,
                     'idEstadoExpediente' => $item->id_estado_expediente,
-                    'estadoExpediente'  => $item->estado_expediente,
-                    'procesales'          => $item->procesales,
-                    'fechaRegistro'     => FormatearFechaLarga($item->fecha_registro),
+                    'estadoExpediente' => $item->estado_expediente,
+                    'procesales' => (int) $item->procesales,
+                    'fechaRegistro' => formatearFechaLarga($item->fecha_registro),
                 ];
             });
 
-            return response()->json(['status' => 'success', 'data' => $result], Response::HTTP_OK);
-        } catch (Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => $th->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json([
+                'status' => 'success',
+                'data' => $resultado
+            ]);
+        } catch (Throwable $e) {
+            Log::error('Error al obtener últimos expedientes', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Error al obtener los últimos expedientes.'
+            ], 500);
         }
     }
 
-    public function GetTotalProcesales()
+    /**
+     * Obtiene el total de procesales únicos activos
+     * 
+     * @return JsonResponse
+     */
+    public function getTotalProcesales(): JsonResponse
     {
         try {
+            $total = DB::table('procesales')
+                ->where('estado_registro', 1)
+                ->distinct()
+                ->count('id_persona');
 
-            $result = DB::table('procesales')->where('estado_registro', 1)->distinct('id_persona')->count();
+            return response()->json([
+                'status' => 'success',
+                'data' => $total
+            ]);
+        } catch (Throwable $e) {
+            Log::error('Error al obtener total de procesales', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
 
-            return response()->json(['status' => 'success', 'data' => $result], Response::HTTP_OK);
-        } catch (Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => $th->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Error al obtener el total de procesales.'
+            ], 500);
         }
     }
 }
