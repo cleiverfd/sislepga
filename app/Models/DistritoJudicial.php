@@ -13,9 +13,7 @@ class DistritoJudicial extends Model
 
     protected $table = 'distritos_judiciales';
     protected $primaryKey = 'id';
-    protected $guarded = [
-        'id'
-    ];
+    protected $fillable = ['descripcion'];
 
     public function juzgados()
     {

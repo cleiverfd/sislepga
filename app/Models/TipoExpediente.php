@@ -4,26 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Sanctum\HasApiTokens;
 
-class Instancia extends Model
+class TipoExpediente extends Model
 {
-    use HasApiTokens;
     use HasFactory;
 
-    protected $table = 'instancias';
+    protected $table = 'expedientes_tipos';
     protected $primaryKey = 'id';
     public $timestamps = false;
 
-    protected $fillable = [
-        'descripcion'
-    ];
+    protected $fillable = ['descripcion'];
 
     /**
      * Relación uno a muchos
      */
     public function expedientes()
     {
-        return $this->hasMany(Expediente::class, 'id_instancia');
+        return $this->hasMany(Expediente::class, 'id_tipo_expediente');
     }
 }

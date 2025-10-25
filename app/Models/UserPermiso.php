@@ -4,26 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Sanctum\HasApiTokens;
 
-class Comunicacion extends Model
+class UserPermiso extends Model
 {
-    use HasApiTokens;
     use HasFactory;
 
-   protected $table = 'comunicaciones';
+    protected $table = 'usuarios_permisos';
     protected $primaryKey = 'id';
     public $timestamps = false;
 
     protected $fillable = [
-        'id_expediente',
-        'id_persona',
-        'medio',
-        'descripcion',
+        'id_usuario',
+        'id_recurso_sistema',
         'fecha_registro',
         'fecha_actualizacion',
         'estado_registro',
-        'usuario_registro'
+        'usuario_registro',
     ];
 
     protected $casts = [
@@ -31,13 +27,19 @@ class Comunicacion extends Model
         'fecha_actualizacion' => 'datetime',
     ];
 
-    public function expediente()
+    /**
+     * Relación muchos a uno
+     */
+    public function usuario()
     {
-        return $this->belongsTo(Expediente::class, 'id_expediente');
+        return $this->belongsTo(User::class, 'id_usuario');
     }
 
-    public function persona()
+    /**
+     * Relación muchos a uno
+     */
+    public function recursoSistema()
     {
-        return $this->belongsTo(Persona::class, 'id_persona');
+        return $this->belongsTo(RecursoSistema::class, 'id_recurso_sistema');
     }
 }

@@ -15,7 +15,33 @@ class Abogado extends Model
 
     protected $table = 'abogados';
     protected $primaryKey = 'id';
-    protected $guarded = [
-        'id'
+    protected $fillable = [
+        'apellido_paterno',
+        'apellido_materno',
+        'nombres',
+        'dni',
+        'expedientes',
+        'fecha_registro',
+        'fecha_actualizacion',
+        'estado_registro',
+        'usuario_registro'
     ];
-}
+
+    protected $casts = [
+        'fecha_registro' => 'datetime',
+        'fecha_actualizacion' => 'datetime',
+    ];
+
+     /**
+     * Relación muchos a muchos con Expediente
+     */
+    public function expedientes()
+    {
+        return $this->belongsToMany(
+            Expediente::class,          
+            'abogado_expediente',       
+            'abogado_id',               
+            'expediente_id'             
+        );
+    }
+}   

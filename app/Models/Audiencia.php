@@ -15,7 +15,31 @@ class Audiencia extends Model
 
     protected $table = 'audiencias';
     protected $primaryKey = 'id';
-    protected $guarded = [
-        'id'
+    protected $fillable = [
+        'id_expediente',
+        'fecha',
+        'hora',
+        'lugar',
+        'enlace',
+        'descripcion',
+        'dias_faltantes',
+        'fecha_registro',
+        'fecha_actualizacion',
+        'estado_registro',
+        'usuario_registro'
     ];
+
+    protected $casts = [
+        'fecha_registro' => 'datetime',
+        'fecha_actualizacion' => 'datetime',
+    ];
+
+    /**
+     * Relación uno a muchos con Expediente
+     */
+
+    public function expediente()
+    {
+        return $this->belongsTo(Expediente::class, 'id_expediente');
+    }
 }

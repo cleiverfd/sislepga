@@ -11,9 +11,20 @@ class Provincia extends Model
     use HasApiTokens;
     use HasFactory;
 
-    protected $table = 'provincias';     
-    protected $primaryKey = 'id';     
-    protected $guarded = [
-        'id'
+    protected $table = 'provincias';
+    protected $primaryKey = 'id';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'id_departamento',
+        'descripcion',
     ];
+
+    /**
+     * Relación: una provincia pertenece a un departamento.
+     */
+    public function departamento()
+    {
+        return $this->belongsTo(Departamento::class, 'id_departamento');
+    }
 }

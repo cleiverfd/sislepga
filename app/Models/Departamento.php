@@ -13,7 +13,6 @@ class Departamento extends Model
 
     protected $table = 'departamentos';     
     protected $primaryKey = 'id';     
-    protected $guarded = [
-        'id'
-    ];
+    protected $fillable = ['descripcion'];
+    public $timestamps = false;
 }

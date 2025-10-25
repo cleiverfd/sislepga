@@ -11,9 +11,18 @@ class Distrito extends Model
     use HasApiTokens;
     use HasFactory;
 
-    protected $table = 'distritos';     
-    protected $primaryKey = 'id';     
-    protected $guarded = [
-        'id'
+    protected $table = 'distritos';
+    protected $primaryKey = 'id';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'id_departamento',
+        'id_provincia',
+        'descripcion',
     ];
+
+    public function provincia()
+    {
+        return $this->belongsTo(Provincia::class, 'id_provincia');
+    }
 }

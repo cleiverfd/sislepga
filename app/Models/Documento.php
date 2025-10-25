@@ -4,26 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Sanctum\HasApiTokens;
 
-class Alerta extends Model
+class Documento extends Model
 {
-    use HasApiTokens;
     use HasFactory;
 
+    protected $table = 'documentos';
+    protected $primaryKey = 'id';
     public $timestamps = false;
 
-    protected $table = 'alertas';
-    protected $primaryKey = 'id';
     protected $fillable = [
         'id_expediente',
-        'fecha',
+        'nombre',
+        'tipo',
         'descripcion',
-        'dias_faltantes',
+        'ruta_archivo',
         'fecha_registro',
         'fecha_actualizacion',
         'estado_registro',
-        'usuario_registro'
+        'usuario_registro',
     ];
 
     protected $casts = [
@@ -32,12 +31,10 @@ class Alerta extends Model
     ];
 
     /**
-     * Relación uno a muchos con Expediente
+     * Relación muchos a uno
      */
-
     public function expediente()
     {
         return $this->belongsTo(Expediente::class, 'id_expediente');
     }
-
 }
